@@ -10,6 +10,38 @@
   </head>
 
   <body>
+    <!--ヘッダー-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand font-weight-bold" href="#">ManeyBoard</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <%= link_to "掲示板一覧", root_path, class: "nav-link" %>
+          </li>
+          <!--ログインしているユーザー-->
+          <% if user_signed_in? %>
+            <li class="nav-item">
+              <%= link_to "マイプロフィール", "#", class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %>
+            </li>
+          <!--ログインしてないユーザー-->
+          <% else %>
+            <li class="nav-item">
+              <%= link_to "新規登録", new_user_registration_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "ログイン", new_user_session_path, class: "nav-link" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+    
     <!--フラッシュメッセージ-->
     <% if flash[:notice] %>
       <div class="alert alert-info">
@@ -21,8 +53,13 @@
         <%= flash[:alert] %>
       </div>
     <% end %>
-    <!--ビューの内容-->
-    <%= yield %>
+    
+    <!--bootstrapのcontainer-->
+    <div class="container">
+      <!--ビューの内容-->
+      <%= yield %>
+    </div>
+
     
   </body>
 </html>
